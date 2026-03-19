@@ -11,3 +11,11 @@ function pagar(cliente) {
     cliente.dinero -= 15; 
     console.log(cliente.nombre + " pagó la cuenta. Le quedan: " + cliente.dinero + " soles.");
 }
+function mostrarEstado(cliente){
+console.log("El cliente " + cliente.nombre + " tiene " + cliente.hambre + " de hambre y tiene " + cliente.dinero + " de dinero");
+
+};
+mostrarEstado(cliente);
+ordenarComida(cliente);
+pagar(cliente);
+mostrarEstado(cliente);
