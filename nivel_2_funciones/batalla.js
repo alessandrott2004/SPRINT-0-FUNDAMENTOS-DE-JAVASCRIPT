@@ -19,3 +19,6 @@ function ataqueAlessandro() {
     energiakevin -= 20;
     console.log("Alessandro contraataca. Energía de Kevin: " + energiakevin);
 }
+function defenderAlessandro() {
+    console.log("Alessandro levanta su escudo para protegerse.");
+}
