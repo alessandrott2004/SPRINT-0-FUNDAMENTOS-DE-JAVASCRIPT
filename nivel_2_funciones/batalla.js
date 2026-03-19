@@ -29,3 +29,9 @@ function recargarEnergiaAlessandro() {
 function escudoMagico() {
     console.log("¡Alessandro activa el Escudo Mágico! Un aura brilla a su alrededor.");
 }
+ataqueKevin();
+defenderAlessandro();
+ataqueAlessandro();
+escudoMagico();
+superAtaque();  
+recargarEnergiaKevin();
