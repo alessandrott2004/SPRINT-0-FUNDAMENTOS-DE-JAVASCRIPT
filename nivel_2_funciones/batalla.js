@@ -22,3 +22,7 @@ function ataqueAlessandro() {
 function defenderAlessandro() {
     console.log("Alessandro levanta su escudo para protegerse.");
 }
+function recargarEnergiaAlessandro() {
+    energiaAlessandro += 15;
+    console.log("Alessandro recupera fuerzas. Energía actual: " + energiaAlessandro);
+}
