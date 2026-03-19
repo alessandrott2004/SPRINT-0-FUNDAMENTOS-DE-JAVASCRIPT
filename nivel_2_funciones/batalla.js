@@ -7,3 +7,7 @@ function ataqueKevin() {
 function defenderKevin() {
     console.log("Kevin se pone en guardia para reducir el próximo impacto.");
 }
+function recargarEnergiaKevin() {
+    energiakevin += 15;
+    console.log("Kevin descansa un momento. Energía actual: " + energiakevin);
+}
