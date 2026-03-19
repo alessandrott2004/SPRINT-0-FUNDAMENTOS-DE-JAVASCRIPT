@@ -11,3 +11,7 @@ function recargarEnergiaKevin() {
     energiakevin += 15;
     console.log("Kevin descansa un momento. Energía actual: " + energiakevin);
 }
+function superAtaque() {
+    energiaAlessandro -= 50;
+    console.log("¡ATAQUE ESPECIAL de Kevin! El impacto es crítico. Energía Alessandro: " + energiaAlessandro);
+}
