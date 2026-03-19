@@ -13,3 +13,9 @@ console.log("has pagado por la comida, ahora tienes "+ cliente.dinero + " de din
 };
 function mostrarEstado(cliente){
 console.log("El cliente " + cliente.nombre + " tiene " + cliente.hambre + " de hambre y tiene " + cliente.dinero + " de dinero");
+
+};
+mostrarEstado(cliente);
+ordenarComida(cliente);
+pagar(cliente);
+mostrarEstado(cliente);
