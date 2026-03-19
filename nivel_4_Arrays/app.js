@@ -9,6 +9,7 @@ let menu = [
 
 // 2) FUNCIÓN: renderizar (mostrar) el menú en pantalla
 function renderMenu() {
+ let totalPlatos = contarPlatos();
  const output = document.getElementById("output");
  output.innerHTML = ""; // limpiar
 
@@ -21,6 +22,7 @@ function renderMenu() {
  }
 
  html += "</ul>";
+ html += `Hay un total de ${totalPlatos} platos`
  output.innerHTML = html;
 }
 
@@ -30,6 +32,9 @@ function agregarPlatoDemo() {
  menu.push(nuevoPlato);
 }
 
+function contarPlatos(){
+ return menu.length;
+}
 // 4) EVENTOS: conectar botones con funciones
 document.getElementById("btnMostrar").addEventListener("click", () => {
  renderMenu();
