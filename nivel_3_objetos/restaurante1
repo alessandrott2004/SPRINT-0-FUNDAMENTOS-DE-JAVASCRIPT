@@ -1,5 +1,0 @@
-let cliente = {
-    nombre: "Kevin",
-    dinero: 100, 
-    hambre: 80  
-}
