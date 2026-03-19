@@ -15,3 +15,7 @@ function superAtaque() {
     energiaAlessandro -= 50;
     console.log("¡ATAQUE ESPECIAL de Kevin! El impacto es crítico. Energía Alessandro: " + energiaAlessandro);
 }
+function ataqueAlessandro() {
+    energiakevin -= 20;
+    console.log("Alessandro contraataca. Energía de Kevin: " + energiakevin);
+}
