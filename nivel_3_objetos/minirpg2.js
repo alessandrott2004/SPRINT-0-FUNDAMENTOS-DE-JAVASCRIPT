@@ -16,3 +16,6 @@ function aumentarNivel(jugador1){
 jugador1.nivel +=1;
 console.log("el nivel de" + jugador1.nivel + " a subido, ahora es nivel " + jugador1.nivel );
 }
+aumentarNivel(jugador1);
+aumentarVida(jugador1);
+aumentarFuerza(jugador1);
