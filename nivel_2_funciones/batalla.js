@@ -26,3 +26,6 @@ function recargarEnergiaAlessandro() {
     energiaAlessandro += 15;
     console.log("Alessandro recupera fuerzas. Energía actual: " + energiaAlessandro);
 }
+function escudoMagico() {
+    console.log("¡Alessandro activa el Escudo Mágico! Un aura brilla a su alrededor.");
+}
