@@ -99,10 +99,11 @@ function venderPlato(nombre, cantidad){
         renderLista("Aviso", ["No se encontro el plato"]);
         return;
     }
-    if (plato.stock < cantidad) {
-        renderLista("Aviso", [`Stock insuficiente. el stock actual de ${plato.nombre}: ${plato.stock}`]);
-        return;
-    }
+      if (plato.stock === 0) {
+    renderLista("Aviso", ["No disponible"]);
+    return;
+  }
+    
     plato.stock-= cantidad;
     renderLista("venta exitosa", [`Se vendieron ${cantidad} x ${plato.nombre}. Stock restante: ${plato.stock}`]);
     renderMenu();
