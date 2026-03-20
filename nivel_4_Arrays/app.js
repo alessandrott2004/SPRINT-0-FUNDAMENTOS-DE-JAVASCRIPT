@@ -53,6 +53,12 @@ function filtrarStockBajo(){
         );
         renderLista("stock bajo", listaDeTextos);
 }
+function obtenerResumenMenu(){
+    const resumen = menu.map(p =>
+         `${p.nombre} - S/ ${p.precio}`
+    )
+ renderLista("resumen del menu", resumen);
+}
 // 4) EVENTOS: conectar botones con funciones
 document.getElementById("btnMostrar").addEventListener("click", () => {
  renderMenu();
