@@ -31,8 +31,22 @@ function renderMenu() {
 // 3) FUNCIÓN: agregar un plato demo al menú
 function agregarPlatoDemo() {
  const nuevoPlato = { nombre: "cau cau", precio: 10, stock: 15 };
- menu.push(nuevoPlato);
+ const duplicado = menu.some(p => 
+    p.nombre.toLowerCase() === nuevoPlato.nombre.toLocaleLowerCase()
+);
+ 
+ 
+  if (duplicado) {
+    renderLista("Aviso", ["Ese plato ya está en el menú"]);
+    return false;  
+  }
+
+  menu.push(nuevoPlato);
+  return true;  
 }
+
+
+
 function buscarPlatoPorNombre(nombre){
   const plato = menu.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
   if (!plato){
@@ -68,14 +82,29 @@ function renderLista(titulo, listaDeTextos){
     html +="</ul>";
     output.innerHTML = html;
 }
+function venderPlato(nombre, cantidad){
+    const plato = menu.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
+    if (!plato){
+        renderLista("Aviso", ["No se encontro el plato"]);
+        return;
+    }
+    if (plato.stock < cantidad) {
+        renderLista("Aviso", [`Stock insuficiente. el stock actual de ${plato.nombre}: ${plato.stock}`]);
+        return;
+    }
+    plato.stock-= cantidad;
+    renderLista("venta exitosa", [`Se vendieron ${cantidad} x ${plato.nombre}. Stock restante: ${plato.stock}`]);
+    renderMenu();
+}
+
 // 4) EVENTOS: conectar botones con funciones
 document.getElementById("btnMostrar").addEventListener("click", () => {
- renderMenu();
+    renderMenu();
 });
 
 document.getElementById("btnAgregar").addEventListener("click", () => {
- agregarPlatoDemo();
- renderMenu();
+     const duplicado = agregarPlatoDemo();
+     if (duplicado)renderMenu();
 });
 document.getElementById("btnBuscar").addEventListener("click", () => {
     const valor = document.getElementById("inputBuscar").value;
@@ -88,4 +117,10 @@ document.getElementById("btnStockBajo").addEventListener("click", () => {
 
 document.getElementById("btnResumen").addEventListener("click", () => {
     obtenerResumenMenu();
+});
+
+document.getElementById("btnVender").addEventListener("click", () => {
+  const nombre = document.getElementById("inputVenderNombre").value;
+  const cantidad = Number(document.getElementById("inputVenderCantidad").value);
+  venderPlato(nombre, cantidad);
 });
