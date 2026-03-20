@@ -77,3 +77,15 @@ document.getElementById("btnAgregar").addEventListener("click", () => {
  agregarPlatoDemo();
  renderMenu();
 });
+document.getElementById("btnBuscar").addEventListener("click", () => {
+    const valor = document.getElementById("inputBuscar").value;
+    buscarPlatoPorNombre(valor);
+});
+
+document.getElementById("btnStockBajo").addEventListener("click", () => {
+    filtrarStockBajo();
+});
+
+document.getElementById("btnResumen").addEventListener("click", () => {
+    obtenerResumenMenu();
+});
