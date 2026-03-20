@@ -6,7 +6,9 @@ let menu = [
  { nombre: "chaufa", precio: 11, stock: 7 },
  { nombre: "causa rellena", precio: 20, stock: 4 }
 ];
-
+function contarPlatos(){
+ return menu.length;
+}
 // 2) FUNCIÓN: renderizar (mostrar) el menú en pantalla
 function renderMenu() {
  let totalPlatos = contarPlatos();
@@ -31,10 +33,16 @@ function agregarPlatoDemo() {
  const nuevoPlato = { nombre: "cau cau", precio: 10, stock: 15 };
  menu.push(nuevoPlato);
 }
-
-function contarPlatos(){
- return menu.length;
+function buscarPlatoPorNombre(nombre){
+  const plato = menu.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
+  if (!plato){
+    renderLista("Resultado de búsqueda", ["Texto no encontrado"]);
+    return;
+  }
+  const texto = `${plato.nombre} - S/${plato.precio} - Stock: ${plato.stock}`;
+  renderLista("Resultado de la búsqueda", [texto]);
 }
+
 // 4) EVENTOS: conectar botones con funciones
 document.getElementById("btnMostrar").addEventListener("click", () => {
  renderMenu();
