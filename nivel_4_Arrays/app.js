@@ -59,6 +59,15 @@ function obtenerResumenMenu(){
     )
  renderLista("resumen del menu", resumen);
 }
+function renderLista(titulo, listaDeTextos){
+    const output = document.getElementById("output");
+    let html =  `<h3>${titulo}</h3><ul>`;
+    for(let i = 0; i < listaDeTextos.length;  i++) {
+        html += `<li>${listaDeTextos[i]}</li>`;
+    }
+    html +="</ul>";
+    output.innerHTML = html;
+}
 // 4) EVENTOS: conectar botones con funciones
 document.getElementById("btnMostrar").addEventListener("click", () => {
  renderMenu();
