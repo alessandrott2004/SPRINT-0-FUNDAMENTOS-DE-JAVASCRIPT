@@ -42,7 +42,17 @@ function buscarPlatoPorNombre(nombre){
   const texto = `${plato.nombre} - S/${plato.precio} - Stock: ${plato.stock}`;
   renderLista("Resultado de la búsqueda", [texto]);
 }
-
+function filtrarStockBajo(){
+    const platosfiltrados = menu.filter(p => p.stock <= 3);
+    if (platosfiltrados.length === 0 ){
+        renderLista("stock bajo", ["no hay platos con stock bajo"])
+        return;
+    }
+    const listaDeTextos = platosfiltrados.map(p =>
+         `${p.nombre} - stock: ${p.stock}`
+        );
+        renderLista("stock bajo", listaDeTextos);
+}
 // 4) EVENTOS: conectar botones con funciones
 document.getElementById("btnMostrar").addEventListener("click", () => {
  renderMenu();
