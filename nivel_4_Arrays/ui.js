@@ -3,7 +3,7 @@ import {
   buscarPlatoPorNombre,
   filtrarStockBajo,
   obtenerResumenMenu,
-  venderPlato,
+  venderPlatoAsync,         // ← reemplaza venderPlato
   calcularEstadoPlato,
   verificarEstadoGeneral
 } from './operaciones.js';
@@ -33,10 +33,10 @@ export function renderLista(titulo, listaTextos) {
   output.innerHTML = html;
 }
 
-export function mostrarMensaje(texto) {
-  document.getElementById("output").innerHTML = `<p>${texto}</p>`;
+export function mostrarMensaje(texto, estado = "") {
+  const output = document.getElementById("output");
+  output.innerHTML = `<p class="mensaje ${estado}">${texto}</p>`;
 }
-
 export function conectarEventos() {
   document.getElementById("btnMostrar").addEventListener("click", () => {
     renderMenu();
@@ -65,11 +65,18 @@ export function conectarEventos() {
     renderLista("Resumen del menú", obtenerResumenMenu());
   });
 
-  document.getElementById("btnVender").addEventListener("click", () => {
-    const nombre   = document.getElementById("inputVenderNombre").value;
-    const cantidad = Number(document.getElementById("inputVenderCantidad").value);
-    const resultado = venderPlato(nombre, cantidad);
-    renderLista(resultado.ok ? "Venta exitosa" : "Aviso", [resultado.mensaje]);
-    if (resultado.ok) renderMenu();
-  });
+document.getElementById("btnVender").addEventListener("click", async () => {
+  const nombre   = document.getElementById("inputVenderNombre").value;
+  const cantidad = Number(document.getElementById("inputVenderCantidad").value);
+
+  mostrarMensaje("Procesando pedido...", "procesando");
+
+  try {
+    const mensaje = await venderPlatoAsync(nombre, cantidad);
+    mostrarMensaje(mensaje, "exito");
+    setTimeout(() => renderMenu(), 1500);  // ← único cambio
+  } catch (error) {
+    mostrarMensaje(error.message, "error");
+  }
+});
 }
