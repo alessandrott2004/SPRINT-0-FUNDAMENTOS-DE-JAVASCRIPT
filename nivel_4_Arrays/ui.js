@@ -1,4 +1,4 @@
-import { menu, contarPlatos, } from './menu.js';
+import { menu, contarPlatos, agregarPlato } from './menu.js';
 import {
   buscarPlatoPorNombre,
   filtrarStockBajo,
