@@ -73,3 +73,12 @@ export function conectarEventos() {
     if (resultado.ok) renderMenu();
   });
 }
+  try {
+    const mensaje = await venderPlatoAsync(nombre, cantidad);
+    mostrarMensaje(mensaje, "exito");
+    setTimeout(() => renderMenu(), 1500);  // ← único cambio
+  } catch (error) {
+    mostrarMensaje(error.message, "error");
+  }
+});
+}
