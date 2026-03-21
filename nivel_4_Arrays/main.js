@@ -1,3 +1,4 @@
-import { renderMenu } from './ui.js';
+import { conectarEventos, renderMenu } from "./ui.js";
 
+conectarEventos();
 renderMenu();

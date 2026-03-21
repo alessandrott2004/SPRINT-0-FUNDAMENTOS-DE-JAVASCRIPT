@@ -4,21 +4,29 @@ export function buscarPlatoPorNombre(nombre) {
   return menu.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
 }
 
-export function filtrarStockBajo() {
-  return menu.filter(p => p.stock <= 3);
+export function filtrarStockBajo(limite = 3) {
+  return menu.filter(p => p.stock <= limite);
 }
 
 export function obtenerResumenMenu() {
-  return menu.map(p => `${p.nombre} - S/ ${p.precio}`);
+  return menu.map(p => `${p.nombre} — S/ ${p.precio}`);
 }
 
 export function venderPlato(nombre, cantidad) {
-  const plato = menu.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
-  if (!plato) return { ok: false, mensaje: "Plato no encontrado" };
-  if (plato.stock === 0) return { ok: false, mensaje: "No disponible" };
+  const plato = buscarPlatoPorNombre(nombre);
+  if (!plato)             return { ok: false, mensaje: "Plato no encontrado" };
+  if (plato.stock === 0)  return { ok: false, mensaje: "No disponible (agotado)" };
+  if (cantidad <= 0)      return { ok: false, mensaje: "Cantidad inválida" };
   if (plato.stock < cantidad) return { ok: false, mensaje: `Stock insuficiente. Stock actual de ${plato.nombre}: ${plato.stock}` };
+
   plato.stock -= cantidad;
   return { ok: true, mensaje: `Se vendieron ${cantidad} x ${plato.nombre}. Stock restante: ${plato.stock}` };
+}
+
+export function calcularEstadoPlato(plato) {
+  if (plato.stock === 0) return "agotado";
+  if (plato.stock <= 3)  return "bajo";
+  return "normal";
 }
 
 export function verificarEstadoGeneral() {
