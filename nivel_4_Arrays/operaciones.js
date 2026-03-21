@@ -40,3 +40,15 @@ export function verificarEstadoGeneral() {
   if (bajos > 0)    return "Hay platos con stock bajo";
   return "Todo disponible";
 }
+export function simularRespuestaServidor(resultado) {
+ return new Promise((resolve, reject) => {
+   setTimeout(() => {
+     const falla = Math.random() < 0.3;
+     if (falla) {
+       reject("Error del servidor simulado.");
+     } else {
+       resolve(resultado);
+     }
+   }, 2000);
+ });
+}
