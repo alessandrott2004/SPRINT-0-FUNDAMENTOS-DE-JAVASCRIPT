@@ -60,3 +60,9 @@ export async function venderPlatoAsync(nombre, cantidad) {
   const respuesta = await simularRespuestaServidor(resultado.mensaje);
   return respuesta;
 }
+export class ErrorNegocio extends Error {
+  constructor(mensaje) {
+    super(mensaje);
+    this.name = "ErrorNegocio";
+  }
+}
