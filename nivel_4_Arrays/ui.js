@@ -75,8 +75,11 @@ document.getElementById("btnVender").addEventListener("click", async () => {
     const mensaje = await venderPlatoAsync(nombre, cantidad);
     mostrarMensaje(mensaje, "exito");
     setTimeout(() => renderMenu(), 1500);  // ← único cambio
-  } catch (error) {
-    mostrarMensaje(error.message, "error");
-  }
+  if (error.name === "ErrorNegocio") {
+   mostrarMensaje("Advertencia: " + error.message);
+ } else {
+   mostrarMensaje("Error del sistema: " + error.message);
+ }
+}
 });
 }
