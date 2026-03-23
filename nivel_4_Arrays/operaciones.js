@@ -1,5 +1,12 @@
 import { menu } from './menu.js';
 
+export class ErrorNegocio extends Error {
+  constructor(mensaje) {
+    super(mensaje);
+    this.name = "ErrorNegocio";
+  }
+}
+
 export function buscarPlatoPorNombre(nombre) {
   return menu.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
 }
@@ -10,17 +17,6 @@ export function filtrarStockBajo(limite = 3) {
 
 export function obtenerResumenMenu() {
   return menu.map(p => `${p.nombre} — S/ ${p.precio}`);
-}
-
-export function venderPlato(nombre, cantidad) {
-  const plato = buscarPlatoPorNombre(nombre);
-  if (!plato)             return { ok: false, mensaje: "Plato no encontrado" };
-  if (plato.stock === 0)  return { ok: false, mensaje: "No disponible (agotado)" };
-  if (cantidad <= 0)      return { ok: false, mensaje: "Cantidad inválida" };
-  if (plato.stock < cantidad) return { ok: false, mensaje: `Stock insuficiente. Stock actual de ${plato.nombre}: ${plato.stock}` };
-
-  plato.stock -= cantidad;
-  return { ok: true, mensaje: `Se vendieron ${cantidad} x ${plato.nombre}. Stock restante: ${plato.stock}` };
 }
 
 export function calcularEstadoPlato(plato) {
@@ -39,7 +35,9 @@ export function verificarEstadoGeneral() {
   if (agotados > 0) return "Hay platos agotados";
   if (bajos > 0)    return "Hay platos con stock bajo";
   return "Todo disponible";
-}export function simularRespuestaServidor(resultado) {
+}
+
+export function simularRespuestaServidor(resultado) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const falla = Math.random() < 0.3;
@@ -53,10 +51,25 @@ export function verificarEstadoGeneral() {
 }
 
 export async function venderPlatoAsync(nombre, cantidad) {
-  const resultado = venderPlato(nombre, cantidad);
-  if (!resultado.ok) {
-    throw new Error(resultado.mensaje);
+  if (!nombre || nombre.trim() === "")   throw new ErrorNegocio("El nombre no puede estar vacío.");
+  if (isNaN(cantidad) || cantidad === "") throw new ErrorNegocio("La cantidad debe ser un número.");
+  if (cantidad <= 0)                      throw new ErrorNegocio("La cantidad debe ser mayor a cero.");
+
+  const plato = buscarPlatoPorNombre(nombre);
+  if (!plato)                throw new ErrorNegocio("Plato no encontrado.");
+  if (plato.stock === 0)     throw new ErrorNegocio("El plato está agotado.");
+  if (cantidad > plato.stock) throw new ErrorNegocio(`Stock insuficiente. Stock actual: ${plato.stock}`);
+
+  plato.stock -= cantidad;
+
+  try {
+    const respuesta = await simularRespuestaServidor(
+      `Se vendieron ${cantidad} x ${plato.nombre}. Stock restante: ${plato.stock}`
+    );
+    return respuesta;
+  } catch (errorServidor) {
+    plato.stock += cantidad; 
+    throw errorServidor;
   }
-  const respuesta = await simularRespuestaServidor(resultado.mensaje);
-  return respuesta;
 }
+
