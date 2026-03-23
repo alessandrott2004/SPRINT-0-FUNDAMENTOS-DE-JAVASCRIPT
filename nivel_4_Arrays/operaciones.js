@@ -1,5 +1,10 @@
 import { menu } from './menu.js';
-
+export class ErrorNegocio extends Error {
+  constructor(mensaje) {
+    super(mensaje);
+    this.name = "ErrorNegocio";
+  }
+}
 export function buscarPlatoPorNombre(nombre) {
   return menu.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
 }
@@ -53,16 +58,22 @@ export function verificarEstadoGeneral() {
 }
 
 export async function venderPlatoAsync(nombre, cantidad) {
-  const resultado = venderPlato(nombre, cantidad);
-  if (!resultado.ok) {
-    throw new Error(resultado.mensaje);
-  }
-  const respuesta = await simularRespuestaServidor(resultado.mensaje);
-  return respuesta;
-}
-export class ErrorNegocio extends Error {
-  constructor(mensaje) {
-    super(mensaje);
-    this.name = "ErrorNegocio";
+
+
+  const plato = buscarPlatoPorNombre(nombre);
+  if (!plato)                throw new ErrorNegocio("Plato no encontrado.");
+  if (plato.stock === 0)     throw new ErrorNegocio("El plato está agotado.");
+  if (cantidad > plato.stock) throw new ErrorNegocio(`Stock insuficiente. Stock actual: ${plato.stock}`);
+
+  plato.stock -= cantidad;
+
+  try {
+    const respuesta = await simularRespuestaServidor(
+      `Se vendieron ${cantidad} x ${plato.nombre}. Stock restante: ${plato.stock}`
+    );
+    return respuesta;
+  } catch (errorServidor) {
+    plato.stock += cantidad; 
+    throw errorServidor;
   }
 }
